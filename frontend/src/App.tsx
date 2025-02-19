@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SendHorizontal, Code2, Sparkles } from "lucide-react";
-import "./App.css"; 
+import { SendHorizontal, Code2 } from "lucide-react";
+import BackgroundAnimation from "@/components/ui/BackgroundAnimation"; // Import the separated file
 
 export default function Page() {
   const [inputValue, setInputValue] = useState("");
@@ -10,13 +10,10 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
       {/* Animated background */}
-      <div className="absolute inset-0 z-0">
-        <div className="matrix-bg" />
-        <div className="gradient-overlay" />
-      </div>
+      <BackgroundAnimation />
 
       {/* Navigation */}
-      <header className="relative z-10">
+      <header className="relative z-20">
         <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
           <a href="/" className="flex items-center gap-2">
             <div className="h-10 w-10 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
@@ -24,21 +21,12 @@ export default function Page() {
             </div>
             <span className="text-xl font-semibold">CodeLens AI</span>
           </a>
-
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" className="text-white/80 hover:text-white">
-              Login
-            </Button>
-            <Button className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:opacity-90 text-white rounded-full px-6 shadow-lg shadow-cyan-500/20">
-              Try Now <Sparkles className="w-4 h-4 ml-2" />
-            </Button>
-          </div>
         </nav>
       </header>
 
       {/* Hero Section */}
-      <main className="relative z-10 container mx-auto px-6 pt-20 md:pt-32">
-        <div className="max-w-4xl mx-auto text-center space-y-12">
+      <main className="relative z-20 container mx-auto px-6 pt-4 md:pt-12">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
           <div className="space-y-4">
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500">
               Elevate Your Code
