@@ -50,6 +50,7 @@ export default function Page() {
                 placeholder="Paste your code or describe what you want to analyze..."
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
+                contentEditable="true"
                 className="relative w-full bg-black/50 backdrop-blur-xl border-white/10 text-white placeholder:text-white/50 h-14 pl-6 pr-12 rounded-2xl"
               />
               <Button
@@ -64,21 +65,21 @@ export default function Page() {
             <div className="flex flex-wrap gap-2 mt-6 justify-center">
               <Button
                 variant="ghost"
-                className="bg-white/5 hover:bg-white/10 text-white/70 rounded-full text-sm border border-white/10 hover:border-cyan-500/50 transition-colors"
+                className="bg-white/5 hover:bg-white/10 text-white/70 rounded-full text-sm border border-white/10 hover:text-white hover:border-cyan-500/50 transition-colors"
               >
                 <span className="w-5 h-5 mr-2">🔍</span>
                 Review my React component for best practices
               </Button>
               <Button
                 variant="ghost"
-                className="bg-white/5 hover:bg-white/10 text-white/70 rounded-full text-sm border border-white/10 hover:border-cyan-500/50 transition-colors"
+                className="bg-white/5 hover:bg-white/10 text-white/70 rounded-full text-sm border border-white/10 hover:text-white hover:border-cyan-500/50 transition-colors"
               >
                 <span className="w-5 h-5 mr-2">🛡️</span>
                 Check API endpoint for security issues
               </Button>
               <Button
                 variant="ghost"
-                className="bg-white/5 hover:bg-white/10 text-white/70 rounded-full text-sm border border-white/10 hover:border-cyan-500/50 transition-colors"
+                className="bg-white/5 hover:bg-white/10 text-white/70 rounded-full text-sm border border-white/10 hover:text-white hover:border-cyan-500/50 transition-colors"
               >
                 <span className="w-5 h-5 mr-2">⚡</span>
                 Optimize database query performance
