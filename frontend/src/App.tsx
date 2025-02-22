@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { SendHorizontal, Code2 } from "lucide-react";
 import BackgroundAnimation from "@/components/ui/BackgroundAnimation"; // Import the separated file
 
 export default function Page() {
   const [inputValue, setInputValue] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // Function to adjust textarea height dynamically
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(e.target.value);
+
+    // Adjust height dynamically
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto"; // Reset height
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Set new height
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
@@ -43,18 +54,23 @@ export default function Page() {
 
           {/* Search Input */}
           <div className="max-w-2xl mx-auto">
-            <div className="relative group">
+            <div className="relative group w-full">
               <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-              <Input
-                type="text"
+
+              {/* Multi-line expanding input field */}
+              <textarea
+                ref={textareaRef}
                 placeholder="Paste your code or describe what you want to analyze..."
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                contentEditable="true"
-                className="relative w-full bg-black/50 backdrop-blur-xl border-white/10 text-white placeholder:text-white/50 h-14 pl-6 pr-12 rounded-2xl"
+                onChange={handleInputChange}
+                rows={1} // Initial row count
+                className="relative w-full bg-black/50 backdrop-blur-xl border-white/10 text-white placeholder:text-white/50 px-6 pr-14 py-3 rounded-2xl resize-none overflow-hidden focus:outline-none"
+                style={{ minHeight: "3.5rem" }} // Prevents shrinking too much
               />
+
+              {/* Send Button Positioned at the Bottom-Right */}
               <Button
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:opacity-90 text-white rounded-xl p-2 h-10 w-10 shadow-lg shadow-cyan-500/20"
+                className="absolute bottom-2 right-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:opacity-90 text-white rounded-xl p-2 h-10 w-10 shadow-lg shadow-cyan-500/20"
                 size="icon"
               >
                 <SendHorizontal className="h-5 w-5" />
