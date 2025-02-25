@@ -60,7 +60,7 @@ export default function Page() {
               {/* Multi-line expanding input field */}
               <textarea
                 ref={textareaRef}
-                placeholder="Paste your code or describe what you want to analyze..."
+                placeholder="Paste your code & analyze..."
                 value={inputValue}
                 onChange={handleInputChange}
                 rows={1} // Initial row count
