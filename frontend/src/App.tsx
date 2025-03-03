@@ -5,6 +5,8 @@ import BackgroundAnimation from "@/components/ui/BackgroundAnimation";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function Page() {
   const [inputValue, setInputValue] = useState("");
@@ -48,16 +50,14 @@ export default function Page() {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      console.log("Raw API response:", response);
       setReviewResult(
         typeof response.data === "string"
           ? response.data
           : JSON.stringify(response.data, null, 2)
-      ); // Assuming the response is the direct review string
-      setInputValue("");
+      );
     } catch (error) {
       console.error("API Error:", error);
-      setReviewResult("⚠️ Error fetching review. Please try again.");
+      setReviewResult("⚠️ Server is busy right now. Please try again later.");
     } finally {
       setIsLoading(false);
     }
@@ -69,6 +69,70 @@ export default function Page() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
+  };
+
+  const markdownComponents = {
+    code({ node, inline, className, children, ...props }: any) {
+      const match = /language-(\w+)/.exec(className || "");
+      return !inline && match ? (
+        <div className="relative">
+          <div className="absolute top-2 right-2 flex gap-2">
+            <span className="text-xs text-cyan-300 uppercase">{match[1]}</span>
+          </div>
+          <SyntaxHighlighter
+            style={atomOneDark}
+            language={match[1]}
+            PreTag="div"
+            className="rounded-lg p-4 mt-6 mb-4 overflow-x-auto"
+            {...props}
+          >
+            {String(children).replace(/\n$/, "")}
+          </SyntaxHighlighter>
+        </div>
+      ) : (
+        <code
+          className="bg-gray-800 px-2 py-1 rounded-md text-sm font-mono"
+          {...props}
+        >
+          {children}
+        </code>
+      );
+    },
+    h1: ({ node, ...props }: any) => (
+      <h1 className="text-3xl font-bold text-cyan-400 mt-8 mb-4" {...props} />
+    ),
+    h2: ({ node, ...props }: any) => (
+      <h2 className="text-2xl font-semibold text-cyan-300 mt-6 mb-3" {...props} />
+    ),
+    h3: ({ node, ...props }: any) => (
+      <h3 className="text-xl font-medium text-cyan-200 mt-4 mb-2" {...props} />
+    ),
+    p: ({ node, ...props }: any) => (
+      <p className="text-gray-300 leading-relaxed mb-4" {...props} />
+    ),
+    ul: ({ node, ...props }: any) => (
+      <ul className="list-disc list-inside mb-4 space-y-2" {...props} />
+    ),
+    ol: ({ node, ...props }: any) => (
+      <ol className="list-decimal list-inside mb-4 space-y-2" {...props} />
+    ),
+    li: ({ node, ...props }: any) => (
+      <li className="text-gray-300" {...props} />
+    ),
+    a: ({ node, ...props }: any) => (
+      <a
+        className="text-cyan-400 hover:text-cyan-300 underline underline-offset-4"
+        target="_blank"
+        rel="noopener noreferrer"
+        {...props}
+      />
+    ),
+    blockquote: ({ node, ...props }: any) => (
+      <blockquote
+        className="border-l-4 border-cyan-500 pl-4 my-4 italic bg-gray-800/50 py-2 rounded-r"
+        {...props}
+      />
+    ),
   };
 
   return (
@@ -156,11 +220,14 @@ export default function Page() {
                     )}
                   </Button>
 
-                  {/* Temporary simple container - replace with SyntaxHighlighter later */}
-                  <div className="prose prose-invert max-w-full overflow-x-auto pt-4">
-                    <pre className="whitespace-pre-wrap break-words font-mono text-sm">
+                  <div className="max-w-full overflow-x-auto pt-4">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={markdownComponents}
+                      // className="prose prose-invert max-w-none"
+                    >
                       {reviewResult}
-                    </pre>
+                    </ReactMarkdown>
                   </div>
                 </div>
               </div>
