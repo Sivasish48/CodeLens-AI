@@ -37,19 +37,23 @@ export default function Page() {
 
   const handleReviewCode = async () => {
     if (!inputValue.trim()) return;
-  
+
     setIsLoading(true);
     setReviewResult(null);
-  
+
     try {
       const response = await axios.post(
         "http://localhost:3000/ai/review-code",
         { code: inputValue },
         { headers: { "Content-Type": "application/json" } }
       );
-  
-      console.log("API Response:", response.data); // Add this for debugging
-      setReviewResult(response.data); // Assuming the response is the direct review string
+
+      console.log("Raw API response:", response);
+      setReviewResult(
+        typeof response.data === "string"
+          ? response.data
+          : JSON.stringify(response.data, null, 2)
+      ); // Assuming the response is the direct review string
       setInputValue("");
     } catch (error) {
       console.error("API Error:", error);
@@ -135,36 +139,28 @@ export default function Page() {
             {reviewResult && (
               <div
                 ref={resultRef}
-                className="mt-6 relative group animate-fade-up"
+                className="mt-6 relative group animate-fade-up w-full"
               >
-                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
-                <div className="relative w-full bg-black/50 backdrop-blur-xl border border-white/10 text-white rounded-2xl p-6">
+                <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-500" />
+
+                <div className="relative w-full bg-black/80 backdrop-blur-xl border border-cyan-500/30 text-white rounded-2xl p-6 overflow-visible">
                   <Button
                     onClick={handleCopyResult}
-                    className="absolute top-2 right-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:opacity-90 text-white rounded-xl p-2 h-10 w-10 shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:scale-105"
+                    className="absolute top-3 right-3 bg-gray-800 hover:bg-gray-700 text-cyan-400 rounded-lg p-2 h-9 w-9 shadow-lg transition-all duration-300 hover:scale-105"
                     size="icon"
                   >
                     {copied ? (
-                      <Check className="h-5 w-5" />
+                      <Check className="h-4 w-4" />
                     ) : (
-                      <Copy className="h-5 w-5" />
+                      <Copy className="h-4 w-4" />
                     )}
                   </Button>
 
-                  <div className="max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                    <SyntaxHighlighter
-                      language="javascript"
-                      style={atomOneDark}
-                      customStyle={{
-                        background: "transparent",
-                        padding: 0,
-                        margin: 0,
-                      }}
-                      wrapLines={true}
-                      wrapLongLines={true}
-                    >
+                  {/* Temporary simple container - replace with SyntaxHighlighter later */}
+                  <div className="prose prose-invert max-w-full overflow-x-auto pt-4">
+                    <pre className="whitespace-pre-wrap break-words font-mono text-sm">
                       {reviewResult}
-                    </SyntaxHighlighter>
+                    </pre>
                   </div>
                 </div>
               </div>
