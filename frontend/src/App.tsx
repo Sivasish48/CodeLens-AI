@@ -50,11 +50,10 @@ export default function Page() {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      setReviewResult(
-        typeof response.data === "string"
-          ? response.data
-          : JSON.stringify(response.data, null, 2)
-      );
+      // Assuming the response is a JSON object with a "message" field containing Markdown
+      const markdownContent = response.data.message || response.data;
+
+      setReviewResult(markdownContent);
     } catch (error) {
       console.error("API Error:", error);
       setReviewResult("⚠️ Server is busy right now. Please try again later.");
@@ -102,7 +101,10 @@ export default function Page() {
       <h1 className="text-3xl font-bold text-cyan-400 mt-8 mb-4" {...props} />
     ),
     h2: ({ node, ...props }: any) => (
-      <h2 className="text-2xl font-semibold text-cyan-300 mt-6 mb-3" {...props} />
+      <h2
+        className="text-2xl font-semibold text-cyan-300 mt-6 mb-3"
+        {...props}
+      />
     ),
     h3: ({ node, ...props }: any) => (
       <h3 className="text-xl font-medium text-cyan-200 mt-4 mb-2" {...props} />
@@ -224,7 +226,6 @@ export default function Page() {
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={markdownComponents}
-                      // className="prose prose-invert max-w-none"
                     >
                       {reviewResult}
                     </ReactMarkdown>
