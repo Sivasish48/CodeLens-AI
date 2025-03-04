@@ -79,7 +79,9 @@ export default function Page() {
             <span className="text-xs text-cyan-300 uppercase">{match[1]}</span>
             <Button
               onClick={() => {
-                navigator.clipboard.writeText(String(children).replace(/\n$/, ""));
+                navigator.clipboard.writeText(
+                  String(children).replace(/\n$/, "")
+                );
                 setCopied(true);
                 setTimeout(() => setCopied(false), 2000);
               }}
@@ -113,25 +115,34 @@ export default function Page() {
       );
     },
     h1: ({ node, ...props }: any) => (
-      <h1 className="text-4xl font-bold text-cyan-400 mt-8 mb-4" {...props} />
+      <h1 className="text-3xl font-bold text-cyan-400 mt-8 mb-4" {...props} />
     ),
     h2: ({ node, ...props }: any) => (
-      <h2 className="text-3xl font-semibold text-cyan-300 mt-6 mb-3" {...props} />
+      <h2
+        className="text-2xl font-semibold text-cyan-300 mt-6 mb-3"
+        {...props}
+      />
     ),
     h3: ({ node, ...props }: any) => (
-      <h3 className="text-2xl font-medium text-cyan-200 mt-4 mb-2" {...props} />
+      <h3 className="text-xl font-medium text-cyan-200 mt-4 mb-2" {...props} />
     ),
     p: ({ node, ...props }: any) => (
       <p className="text-gray-300 leading-relaxed mb-4 text-lg" {...props} />
     ),
     ul: ({ node, ...props }: any) => (
-      <ul className="list-disc list-inside mb-4 space-y-2 text-gray-300 text-lg" {...props} />
+      <ul
+        className="list-disc list-inside mb-4 space-y-2 text-gray-300 text-lg pl-5"
+        {...props}
+      />
     ),
     ol: ({ node, ...props }: any) => (
-      <ol className="list-decimal list-inside mb-4 space-y-2 text-gray-300 text-lg" {...props} />
+      <ol
+        className="list-decimal list-inside mb-4 space-y-2 text-gray-300 text-lg pl-5"
+        {...props}
+      />
     ),
     li: ({ node, ...props }: any) => (
-      <li className="text-gray-300 text-lg" {...props} />
+      <li className="text-gray-300 text-lg mb-2" {...props} />
     ),
     a: ({ node, ...props }: any) => (
       <a
