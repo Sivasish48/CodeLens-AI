@@ -77,6 +77,21 @@ export default function Page() {
         <div className="relative">
           <div className="absolute top-2 right-2 flex gap-2">
             <span className="text-xs text-cyan-300 uppercase">{match[1]}</span>
+            <Button
+              onClick={() => {
+                navigator.clipboard.writeText(String(children).replace(/\n$/, ""));
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="bg-gray-800 hover:bg-gray-700 text-cyan-400 rounded-lg p-1 h-6 w-6 shadow-lg transition-all duration-300 hover:scale-105"
+              size="icon"
+            >
+              {copied ? (
+                <Check className="h-3 w-3" />
+              ) : (
+                <Copy className="h-3 w-3" />
+              )}
+            </Button>
           </div>
           <SyntaxHighlighter
             style={atomOneDark}
@@ -90,7 +105,7 @@ export default function Page() {
         </div>
       ) : (
         <code
-          className="bg-gray-800 px-2 py-1 rounded-md text-sm font-mono"
+          className="bg-gray-800 px-2 py-1 rounded-md text-sm font-mono text-cyan-300"
           {...props}
         >
           {children}
@@ -98,32 +113,29 @@ export default function Page() {
       );
     },
     h1: ({ node, ...props }: any) => (
-      <h1 className="text-3xl font-bold text-cyan-400 mt-8 mb-4" {...props} />
+      <h1 className="text-4xl font-bold text-cyan-400 mt-8 mb-4" {...props} />
     ),
     h2: ({ node, ...props }: any) => (
-      <h2
-        className="text-2xl font-semibold text-cyan-300 mt-6 mb-3"
-        {...props}
-      />
+      <h2 className="text-3xl font-semibold text-cyan-300 mt-6 mb-3" {...props} />
     ),
     h3: ({ node, ...props }: any) => (
-      <h3 className="text-xl font-medium text-cyan-200 mt-4 mb-2" {...props} />
+      <h3 className="text-2xl font-medium text-cyan-200 mt-4 mb-2" {...props} />
     ),
     p: ({ node, ...props }: any) => (
-      <p className="text-gray-300 leading-relaxed mb-4" {...props} />
+      <p className="text-gray-300 leading-relaxed mb-4 text-lg" {...props} />
     ),
     ul: ({ node, ...props }: any) => (
-      <ul className="list-disc list-inside mb-4 space-y-2" {...props} />
+      <ul className="list-disc list-inside mb-4 space-y-2 text-gray-300 text-lg" {...props} />
     ),
     ol: ({ node, ...props }: any) => (
-      <ol className="list-decimal list-inside mb-4 space-y-2" {...props} />
+      <ol className="list-decimal list-inside mb-4 space-y-2 text-gray-300 text-lg" {...props} />
     ),
     li: ({ node, ...props }: any) => (
-      <li className="text-gray-300" {...props} />
+      <li className="text-gray-300 text-lg" {...props} />
     ),
     a: ({ node, ...props }: any) => (
       <a
-        className="text-cyan-400 hover:text-cyan-300 underline underline-offset-4"
+        className="text-cyan-400 hover:text-cyan-300 underline underline-offset-4 text-lg"
         target="_blank"
         rel="noopener noreferrer"
         {...props}
@@ -131,7 +143,7 @@ export default function Page() {
     ),
     blockquote: ({ node, ...props }: any) => (
       <blockquote
-        className="border-l-4 border-cyan-500 pl-4 my-4 italic bg-gray-800/50 py-2 rounded-r"
+        className="border-l-4 border-cyan-500 pl-4 my-4 italic bg-gray-800/50 py-2 rounded-r text-gray-300 text-lg"
         {...props}
       />
     ),
