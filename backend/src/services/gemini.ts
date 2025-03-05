@@ -44,3 +44,5 @@ const generateContent = async (prompt: string) => {
 };
 
 export default generateContent;
+
+

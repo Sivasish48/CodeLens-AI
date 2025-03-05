@@ -50,7 +50,7 @@ export default function Page() {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      // Assuming the response is a JSON object with a "message" field containing Markdown
+    
       const markdownContent = response.data.message || response.data;
 
       setReviewResult(markdownContent);
