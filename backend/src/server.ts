@@ -10,7 +10,7 @@ app.use(cors());
 const aiRouter = router;
 app.use("/ai", aiRouter);
 
-const port = 3000;
+const port = 4000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

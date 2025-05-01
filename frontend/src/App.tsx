@@ -45,7 +45,7 @@ export default function Page() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/ai/review-code",
+        "http://localhost:4000/ai/review-code",
         { code: inputValue },
         { headers: { "Content-Type": "application/json" } }
       );
